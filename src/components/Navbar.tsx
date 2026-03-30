@@ -70,6 +70,15 @@ export function Navbar({ onMenuClick }: NavbarProps) {
             <Link to="/products" className="text-gray-600 hover:text-primary transition-colors">
               {t('nav.products')}
             </Link>
+            <Link to="/quote" className="text-gray-600 hover:text-primary transition-colors">
+              {i18n.language === 'ar' ? 'حكمة اليوم' : 'Daily Quote'}
+            </Link>
+            <Link to="/services" className="text-gray-600 hover:text-primary transition-colors">
+              {i18n.language === 'ar' ? 'خدماتي' : 'Services'}
+            </Link>
+            <Link to="/contact" className="text-gray-600 hover:text-primary transition-colors">
+              {i18n.language === 'ar' ? 'تواصل معي' : 'Contact'}
+            </Link>
             <Link to="/become-vendor" className="text-gray-600 hover:text-primary transition-colors">
               become بائع
             </Link>

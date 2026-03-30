@@ -14,6 +14,9 @@ import { AdminDashboard } from '@/pages/AdminDashboard';
 import { FAQPage } from '@/pages/FAQPage';
 import { ShippingPage } from '@/pages/ShippingPage';
 import { ReturnsPage } from '@/pages/ReturnsPage';
+import { QuotePage } from '@/pages/QuotePage';
+import { ServicesPage } from '@/pages/ServicesPage';
+import { ContactPage } from '@/pages/ContactPage';
 import { DbTest } from '@/components/DbTest';
 import { TestUsersPage } from '@/pages/TestUsersPage';
 
@@ -47,6 +50,9 @@ function App() {
           <Route path="faq" element={<FAQPage />} />
           <Route path="shipping" element={<ShippingPage />} />
           <Route path="returns" element={<ReturnsPage />} />
+          <Route path="quote" element={<QuotePage />} />
+          <Route path="services" element={<ServicesPage />} />
+          <Route path="contact" element={<ContactPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

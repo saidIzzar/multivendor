@@ -130,6 +130,22 @@ CREATE TABLE IF NOT EXISTS public.city_shipping (
 );
 
 -- ============================================
+-- CONTACT MESSAGES TABLE
+-- ============================================
+CREATE TABLE IF NOT EXISTS public.contact_messages (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  fullname TEXT NOT NULL,
+  email TEXT NOT NULL,
+  phone TEXT NOT NULL,
+  city TEXT NOT NULL,
+  message TEXT NOT NULL,
+  latitude DECIMAL(10, 8),
+  longitude DECIMAL(11, 8),
+  is_read BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- ============================================
 -- INDEXES
 -- ============================================
 CREATE INDEX IF NOT EXISTS idx_products_vendor ON products(vendor_id);
@@ -153,6 +169,7 @@ ALTER TABLE public.reviews ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.coupons ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.notifications ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.city_shipping ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.contact_messages ENABLE ROW LEVEL SECURITY;
 
 -- Profiles policies
 CREATE POLICY "Users can view own profile" ON public.profiles FOR SELECT USING (auth.uid() = id);
@@ -202,6 +219,15 @@ CREATE POLICY "Admins can manage coupons" ON public.coupons FOR ALL USING (
 -- Notifications policies
 CREATE POLICY "Users can view own notifications" ON public.notifications FOR SELECT USING (user_id = auth.uid());
 CREATE POLICY "Users can update own notifications" ON public.notifications FOR UPDATE USING (user_id = auth.uid());
+
+-- Contact messages policies
+CREATE POLICY "Anyone can create contact messages" ON public.contact_messages FOR INSERT WITH CHECK (true);
+CREATE POLICY "Admins can view all contact messages" ON public.contact_messages FOR SELECT USING (
+  EXISTS (SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role = 'admin')
+);
+CREATE POLICY "Admins can delete contact messages" ON public.contact_messages FOR DELETE USING (
+  EXISTS (SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role = 'admin')
+);
 
 -- ============================================
 -- TRIGGERS
